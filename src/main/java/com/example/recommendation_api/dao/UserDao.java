@@ -25,7 +25,9 @@ public class UserDao {
                 + user.getPassword() + "')";
 
         try (Connection conn = databaseConfig.getConnection();
-             Statement statement = conn.createStatement()) {
+             Statement statement = conn.createStatement()
+        )
+        {
 
             statement.executeUpdate(sql);
             System.out.println("User inserted successfully");
