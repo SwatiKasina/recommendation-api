@@ -40,15 +40,15 @@ public class UserController {
 
      )
     public UserDto loginUser (@RequestBody LoginModel loginModel){
-        return userDao.loginUser(loginModel.getEmail(),loginModel.getPassword());
+        return userDao.loginUser(loginModel);
 
      }
 
      @GetMapping(
-             value="/user",
+             value="/{id}",
              produces = MediaType.APPLICATION_JSON_VALUE
      )
-     public UserDto getUser(@RequestParam UUID id){
+     public UserDto getUser(@PathVariable UUID id){
 
          return userDao.getUserById(id);
      }

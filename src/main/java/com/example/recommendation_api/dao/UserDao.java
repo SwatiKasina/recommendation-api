@@ -15,47 +15,46 @@ import java.util.UUID;
 public class UserDao {
 
     private final DatabaseConfig databaseConfig;
-
-    // INSERT USER
-    public void saveUser(UserDto user) {
-        String sql = "INSERT INTO dolly.users (first_name, last_name, email, password) VALUES ('"
-                + user.getFirstName() + "', '"
-                + user.getLastName() + "', '"
-                + user.getEmail() + "', '"
-                + user.getPassword() + "')";
-
+    // Insert
+    // It takes users data and insert it to db
+    public void saveUser (UserDto user) {
+        //create sql query
+        String sql = " insert into dolly.users (first_name, last_name, email, password) values " + "('" + user.getFirstName() + "', '" + user.getLastName() + "', '" + user.getEmail() + "', '" + user.getPassword() + "')";
+        //connect to db
         try (Connection conn = databaseConfig.getConnection();
-             Statement statement = conn.createStatement()
-        )
+             // create statement object to send sql query to db
+             Statement statement = conn.createStatement())
         {
-
-            statement.executeUpdate(sql);
-            System.out.println("User inserted successfully");
-
-        } catch (SQLException e) {
+            //execute query
+              statement.executeUpdate(sql);
+              System.out.println("User created Successfully");
+        } catch (SQLException e){
             e.printStackTrace();
         }
+
     }
 
-
-
-    public UserDto loginUser(String email, String password) {
+    //Login POST call
+    //
+    public UserDto loginUser(LoginModel loginModel) {
 
         String sql = "SELECT * FROM dolly.users WHERE email = '"
-                + email + "' AND password = '" + password + "'";
+                + loginModel.getEmail() + "' AND password = '" + loginModel.getPassword() + "'";
 
         try (Connection conn = databaseConfig.getConnection();
              Statement stmt = conn.createStatement()) {
 
             ResultSet rs = stmt.executeQuery(sql);
 
+            //move cursor to first row of result
             if (rs.next()) {
+                // create an empty object to store user data
                 UserDto user = new UserDto();
                 user.setId(rs.getObject("id", java.util.UUID.class));
                 user.setFirstName(rs.getString("first_name"));
                 user.setLastName(rs.getString("last_name"));
                 user.setEmail(rs.getString("email"));
-                user.setPassword(rs.getString("password"));
+                //user.setPassword(rs.getString("password"));
 
                 System.out.println("Login successful");
                 return user;
