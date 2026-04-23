@@ -2,6 +2,8 @@ package com.example.recommendation_api.controller;
 import com.example.recommendation_api.dao.UserDao;
 import com.example.recommendation_api.dto.UserDto;
 import com.example.recommendation_api.model.LoginModel;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.UUID;
 
 @RequestMapping("api/v1/user")
 @CrossOrigin("*")
+@Tag(name = "User Controller", description = "APIs for user signup, login, and retrieval")
 
 public class UserController {
 
@@ -22,6 +25,7 @@ public class UserController {
 
      }
 
+    @Operation(summary = "Signup new user")
      @PostMapping(
              value = "/signup",
              consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -32,7 +36,7 @@ public class UserController {
         return "user saved successfully";
 
      }
-
+    @Operation(summary = "Login user")
      @PostMapping(
              value= "/login",
              consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -43,7 +47,7 @@ public class UserController {
         return userDao.loginUser(loginModel);
 
      }
-
+    @Operation(summary = "Get user by ID")
      @GetMapping(
              value="/{id}",
              produces = MediaType.APPLICATION_JSON_VALUE
