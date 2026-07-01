@@ -22,7 +22,6 @@ public class HelloSwati {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public String getHealthCheck() throws SQLException {
-
         return null;
     }
 }

@@ -98,7 +98,7 @@ public class ThreadController {
         System.out.println("Main Thread Started :" + Thread.currentThread().getName());
         ExecutorService executors = Executors.newFixedThreadPool(2);
 
-        List<Future<String>> futures = new ArrayList<>();  // create an empty list to store future result i dont have result yet
+        List<Future<String>> futures = new ArrayList<>();  // create an empty list to store future result I don't have result yet
         Future<String> washingFuture = executors.submit(washDishes);
         Future<String> cuttingFuture = executors.submit(cutVeggies);
         futures.add(washingFuture);
